@@ -2,10 +2,324 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Bob-Ddong-Me 계산기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💩밥똥메 전용 스타포스 시뮬레이터💩 </title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        /* 6월12일서브.html 스타일 가이드 적용 */
+        :root {
+            --bg-color: #0c0e10;
+            --card-bg: #141619;
+            --nav-bg: #141619;
+            --text-main: #e0e6ed;
+            --text-sub: #94a3b8;
+            --accent-color: #00d2ff;
+            --border-color: #2d343f;
+            --stat-bg: #1e2228;
+            --star-color: #ffb400;
+            --star-empty: #475569;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            width: 100%;
+            max-width: 460px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .star-display {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 20px 0;
+            background-color: #0f1114;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .info-box {
+            background: #0f1114;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            text-align: left;
+            line-height: 1.8;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .highlight-drop {
+            color: #ff4d4d;
+            font-weight: 700;
+        }
+
+        .highlight-keep {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn-enhance {
+            text-decoration: none;
+            color: #fff;
+            background-color: var(--accent-color);
+            border: none;
+            padding: 14px 0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            flex: 2;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .btn-enhance:hover {
+            opacity: 0.8;
+        }
+
+        .btn-reset {
+            background-color: #1c2025;
+            color: var(--text-sub);
+            border: 1px solid var(--border-color);
+            padding: 14px 0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            flex: 1;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .btn-reset:hover {
+            background: #252a31;
+            color: #fff;
+        }
+
+        .stats {
+            background: var(--stat-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 0.95rem;
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .stats-title {
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .log-box {
+            margin-top: 20px;
+            background-color: #0f1114;
+            height: 140px;
+            overflow-y: auto;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            text-align: left;
+            color: var(--text-sub);
+            line-height: 1.6;
+            border: 1px solid var(--border-color);
+        }
+    </style>
 </head>
 <body>
-    <h1>웹사이트가 성공적으로 개설되었습니다!</h1>
-    <p>여기에 원하시는 계산기 프로그램이나 콘텐츠를 구성하시면 됩니다.</p>
+
+<div class="container">
+    <h1> 💩밥똥메 강화 시뮬레이터💩 </h1>
+    
+    <div class="star-display" id="starDisplay">0 ➔ 1 성 도전</div>
+    
+    <div class="info-box">
+        • 현재 상태: <span id="currentStarInfo" style="color: #fff;">0성</span><br>
+        • 강화 비용: <span id="costInfo" style="color: var(--accent-color); font-weight: bold;">174.1k</span><br>
+        • 성공 확률: <span id="successRate" style="color: #33ffbb;">95%</span><br>
+        • 실패 확률: <span id="failRate" style="color: #ff4444;">5%</span> <span id="dropWarning"></span>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn-enhance" onclick="enhance()">강 화</button>
+        <button class="btn-reset" onclick="resetSimulator()">초기화</button>
+    </div>
+
+    <div class="stats">
+        <strong class="stats-title">📊 밥똥메 강화 누적표</strong>
+        • 대가리 깨진 횟수: <span id="totalAttempts" style="color: #fff;">0</span>회<br>
+        • 최고 도달 성급: <span id="maxStar" style="color: var(--star-color);">0</span>성<br>
+        • 사용한 금액: <span id="totalCost" style="color: var(--accent-color); font-weight: bold;">0k</span>
+    </div>
+
+    <div class="log-box" id="logBox">
+        <div style="color: #888;">[시스템] 밥똥메 강화 준비가 완료되었습니다.</div>
+    </div>
+</div>
+
+<script>
+    const probabilities = [
+        95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 
+        45, 40, 35, 30, 30, 30, 30, 30, 30, 30, 
+        30, 30, 15, 14, 13, 12, 12, 11, 11, 10  
+    ];
+
+    // 정상 가격 표 (원래 가격)
+    const costs = [
+        174111, 347444, 520778, 694111, 867444, 1040778, 1222222, 1333333, 1555556, 1777778, 
+        7111111, 48888889, 89000000, 148222222, 262000000, 180444444, 239666667, 309888889, 390333333, 469000000, 
+        560888889, 651777778, 741000000, 831222222, 930000000, 1031666667, 1132888889, 1229444444, 1330111111, 1434555556 
+    ];
+
+    // 무조건 k, m 단위로만 정밀 변환하는 함수
+    function formatCost(cost) {
+        if (cost >= 1000000) {
+            return (cost / 1000000).toFixed(1) + "m";
+        } else if (cost >= 1000) {
+            return (cost / 1000).toFixed(1) + "k";
+        }
+        return cost + "";
+    }
+
+    let currentStar = 0;
+    let totalAttempts = 0;
+    let maxStar = 0;
+    let totalCostAccumulated = 0;
+    const MAX_LOGS = 50;
+
+    function updateUI() {
+        if (currentStar === 30) {
+            document.getElementById('starDisplay').innerText = "🎉 30성 완료!! 🎉";
+            document.getElementById('costInfo').innerText = "-";
+            document.getElementById('successRate').innerText = "-";
+            document.getElementById('failRate').innerText = "-";
+            document.getElementById('dropWarning').innerText = "";
+            document.getElementById('totalAttempts').innerText = totalAttempts;
+            document.getElementById('maxStar').innerText = maxStar;
+            document.getElementById('totalCost').innerText = formatCost(totalCostAccumulated);
+            return;
+        }
+
+        document.getElementById('starDisplay').innerText = `⭐️ ${currentStar} ➔ ${currentStar + 1} 성 도전`;
+        document.getElementById('currentStarInfo').innerText = `${currentStar}성`;
+        document.getElementById('costInfo').innerText = formatCost(costs[currentStar]);
+        
+        const success = probabilities[currentStar];
+        const fail = 100 - success;
+        
+        document.getElementById('successRate').innerText = `${success}%`;
+        document.getElementById('failRate').innerText = `${fail}%`;
+
+        const warningEl = document.getElementById('dropWarning');
+        if (currentStar <= 10) {
+            warningEl.className = "highlight-keep";
+            warningEl.innerText = "(안전지대)";
+        } else if (currentStar === 15 || currentStar === 20 || currentStar === 25) {
+            warningEl.className = "highlight-keep";
+            warningEl.innerText = "(5단계 주차 보장)";
+        } else {
+            warningEl.className = "highlight-drop";
+            warningEl.innerText = "(실패 시 무조건 하락)";
+        }
+
+        document.getElementById('totalAttempts').innerText = totalAttempts;
+        document.getElementById('maxStar').innerText = maxStar;
+        document.getElementById('totalCost').innerText = formatCost(totalCostAccumulated);
+    }
+
+    function enhance() {
+        if (currentStar >= 30) {
+            alert("이미 30성 오너입니다");
+            return;
+        }
+
+        totalCostAccumulated += costs[currentStar];
+        totalAttempts++;
+
+        const successChance = probabilities[currentStar];
+        const roll = Math.random() * 100;
+        const logBox = document.getElementById('logBox');
+        
+        const logDiv = document.createElement('div');
+        const currentCostFormatted = formatCost(costs[currentStar]);
+
+        if (roll < successChance) {
+            logDiv.innerHTML = `<span style="color: #33ffbb;">[성공]</span> ${currentStar}성 ➔ ${currentStar + 1}성 기적 달성! (-${currentCostFormatted})`;
+            currentStar++;
+            if (currentStar > maxStar) maxStar = currentStar;
+        } else {
+            let prevStar = currentStar;
+            if (currentStar > 10 && currentStar !== 15 && currentStar !== 20 && currentStar !== 25) {
+                currentStar--;
+                logDiv.innerHTML = `<span style="color: #ff4444;">[하락]</span> 뒷목 주의! ${prevStar}성 ➔ ${currentStar}성으로 멸망... (-${currentCostFormatted})`;
+            } else {
+                logDiv.innerHTML = `<span style="color: #9aa0b0;">[실패]</span> 변동 없음 (${currentStar}성 유지) (-${currentCostFormatted})`;
+            }
+        }
+
+        logBox.insertBefore(logDiv, logBox.firstChild);
+
+        if (logBox.children.length > MAX_LOGS) {
+            logBox.removeChild(logBox.lastChild);
+        }
+
+        updateUI();
+    }
+
+    function resetSimulator() {
+        if (confirm("초기화하시겠습니까?")) {
+            currentStar = 0;
+            totalAttempts = 0;
+            maxStar = 0;
+            totalCostAccumulated = 0;
+            
+            const logBox = document.getElementById('logBox');
+            logBox.innerHTML = '<div style="color: #888;">[시스템] 새로운 마음으로 대가리 깨질 준비를 마쳤습니다.</div>';
+            
+            updateUI();
+        }
+    }
+
+    updateUI();
+</script>
+
 </body>
 </html>
