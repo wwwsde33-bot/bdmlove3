@@ -254,10 +254,10 @@
             warningEl.innerText = "(안전지대)";
         } else if (currentStar === 15 || currentStar === 20 || currentStar === 25) {
             warningEl.className = "highlight-keep";
-            warningEl.innerText = "(5단계 주차 보장)";
+            warningEl.innerText = "(안전지대)";
         } else {
             warningEl.className = "highlight-drop";
-            warningEl.innerText = "(실패 시 무조건 하락)";
+            warningEl.innerText = "(실패 시 하락)";
         }
 
         document.getElementById('totalAttempts').innerText = totalAttempts;
@@ -282,14 +282,14 @@
         const currentCostFormatted = formatCost(costs[currentStar]);
 
         if (roll < successChance) {
-            logDiv.innerHTML = `<span style="color: #33ffbb;">[성공]</span> ${currentStar}성 ➔ ${currentStar + 1}성 기적 달성! (-${currentCostFormatted})`;
+            logDiv.innerHTML = `<span style="color: #33ffbb;">[성공]</span> ${currentStar}성 ➔ ${currentStar + 1}성 달성! (-${currentCostFormatted})`;
             currentStar++;
             if (currentStar > maxStar) maxStar = currentStar;
         } else {
             let prevStar = currentStar;
             if (currentStar > 10 && currentStar !== 15 && currentStar !== 20 && currentStar !== 25) {
                 currentStar--;
-                logDiv.innerHTML = `<span style="color: #ff4444;">[하락]</span> 뒷목 주의! ${prevStar}성 ➔ ${currentStar}성으로 멸망... (-${currentCostFormatted})`;
+                logDiv.innerHTML = `<span style="color: #ff4444;">[하락]</span> 실패! ${prevStar}성 ➔ ${currentStar}성으로 멸망... (-${currentCostFormatted})`;
             } else {
                 logDiv.innerHTML = `<span style="color: #9aa0b0;">[실패]</span> 변동 없음 (${currentStar}성 유지) (-${currentCostFormatted})`;
             }
